@@ -44,8 +44,8 @@ import (
 	"testing"
 	"time"
 
-	. "github.com/golang/protobuf/proto"
-	. "github.com/golang/protobuf/proto/testdata"
+	. "github.com/hailocab/protobuf/proto"
+	. "github.com/hailocab/protobuf/proto/testdata"
 )
 
 var globalO *Buffer
