@@ -1,7 +1,7 @@
 // Go support for Protocol Buffers - Google's data interchange format
 //
 // Copyright 2010 The Go Authors.  All rights reserved.
-// https://github.com/golang/protobuf
+// https://github.com/hailocab/protobuf
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -88,7 +88,7 @@
 
 		package example
 
-		import proto "github.com/golang/protobuf/proto"
+		import proto "github.com/hailocab/protobuf/proto"
 		import math "math"
 
 		type FOO int32
@@ -176,7 +176,7 @@
 		import (
 			"log"
 
-			"github.com/golang/protobuf/proto"
+			"github.com/hailocab/protobuf/proto"
 			pb "./example.pb"
 		)
 
