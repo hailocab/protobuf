@@ -546,10 +546,10 @@ func RegisterUniquePackageName(pkg string, f *FileDescriptor) string {
 	// Convert dots to underscores before finding a unique alias.
 	pkg = strings.Map(badToUnderscore, pkg)
 
-	for i, orig := 1, pkg; pkgNamesInUse[pkg]; i++ {
-		// It's a duplicate; must rename.
-		pkg = orig + strconv.Itoa(i)
-	}
+	//for i, orig := 1, pkg; pkgNamesInUse[pkg]; i++ {
+	// It's a duplicate; must rename.
+	//	pkg = orig + strconv.Itoa(i)
+	//}
 	// Install it.
 	pkgNamesInUse[pkg] = true
 	if f != nil {
@@ -1154,6 +1154,9 @@ func (g *Generator) generateImports() {
 	if !g.file.proto3 {
 		g.P("import " + g.Pkg["math"] + ` "math"`)
 	}
+
+	imported := make(map[string]bool)
+
 	for i, s := range g.file.Dependency {
 		fd := g.fileByName(s)
 		// Do not import our own package.
@@ -1167,6 +1170,13 @@ func (g *Generator) generateImports() {
 			importPath = substitution
 		}
 		importPath = g.ImportPrefix + importPath
+
+		if _, ok := imported[importPath]; ok {
+			continue
+		}
+
+		imported[importPath] = true
+
 		// Skip weak imports.
 		if g.weak(int32(i)) {
 			g.P("// skipping weak import ", fd.PackageName(), " ", strconv.Quote(importPath))
