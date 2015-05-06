@@ -1282,6 +1282,12 @@ func (g *Generator) generateEnum(enum *EnumDescriptor) {
 	g.P("}")
 
 	if !enum.proto3() {
+		g.P("func (x ", ccTypeName, ") MarshalJSON() ([]byte, error) {")
+		g.In()
+		g.P("return json.Marshal(x.String())")
+		g.Out()
+		g.P("}")
+
 		g.P("func (x *", ccTypeName, ") UnmarshalJSON(data []byte) error {")
 		g.In()
 		g.P("value, err := ", g.Pkg["proto"], ".UnmarshalJSONEnum(", ccTypeName, `_value, data, "`, ccTypeName, `")`)
