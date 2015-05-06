@@ -1202,6 +1202,7 @@ func (g *Generator) generateImports() {
 	g.P("// Reference imports to suppress errors if they are not otherwise used.")
 	g.P("var _ = ", g.Pkg["proto"], ".Marshal")
 	if !g.file.proto3 {
+		g.P("var _ = &", g.Pkg["json"], ".SyntaxError{}")
 		g.P("var _ = ", g.Pkg["math"], ".Inf")
 	}
 	g.P()
