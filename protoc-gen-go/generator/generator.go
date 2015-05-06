@@ -656,6 +656,7 @@ func (g *Generator) SetPackageNames() {
 	// Register the support package names. They might collide with the
 	// name of a package we import.
 	g.Pkg = map[string]string{
+		"json":  RegisterUniquePackageName("json", nil),
 		"math":  RegisterUniquePackageName("math", nil),
 		"proto": RegisterUniquePackageName("proto", nil),
 	}
@@ -1296,7 +1297,7 @@ func (g *Generator) generateEnum(enum *EnumDescriptor) {
 	if !enum.proto3() {
 		g.P("func (x ", ccTypeName, ") MarshalJSON() ([]byte, error) {")
 		g.In()
-		g.P("return ", g.Pkg["proto"], ".Marshal(x.String())")
+		g.P("return ", g.Pkg["json"], ".Marshal(x.String())")
 		g.Out()
 		g.P("}")
 
