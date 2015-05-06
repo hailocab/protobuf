@@ -1152,6 +1152,7 @@ func (g *Generator) generateImports() {
 	// for handling bit patterns for floating-point numbers.
 	g.P("import " + g.Pkg["proto"] + " " + strconv.Quote(g.ImportPrefix+"github.com/hailocab/protobuf/proto"))
 	if !g.file.proto3 {
+		g.P("import " + g.Pkg["json"] + ` "encoding/json"`)
 		g.P("import " + g.Pkg["math"] + ` "math"`)
 	}
 
@@ -1201,6 +1202,7 @@ func (g *Generator) generateImports() {
 	g.P("// Reference imports to suppress errors if they are not otherwise used.")
 	g.P("var _ = ", g.Pkg["proto"], ".Marshal")
 	if !g.file.proto3 {
+		g.P("var _ = &", g.Pkg["json"], ".SyntaxError{}")
 		g.P("var _ = ", g.Pkg["math"], ".Inf")
 	}
 	g.P()
@@ -1292,6 +1294,12 @@ func (g *Generator) generateEnum(enum *EnumDescriptor) {
 	g.P("}")
 
 	if !enum.proto3() {
+		g.P("func (x ", ccTypeName, ") MarshalJSON() ([]byte, error) {")
+		g.In()
+		g.P("return ", g.Pkg["proto"], ".Marshal(x.String())")
+		g.Out()
+		g.P("}")
+
 		g.P("func (x *", ccTypeName, ") UnmarshalJSON(data []byte) error {")
 		g.In()
 		g.P("value, err := ", g.Pkg["proto"], ".UnmarshalJSONEnum(", ccTypeName, `_value, data, "`, ccTypeName, `")`)
