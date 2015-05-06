@@ -1152,6 +1152,7 @@ func (g *Generator) generateImports() {
 	// for handling bit patterns for floating-point numbers.
 	g.P("import " + g.Pkg["proto"] + " " + strconv.Quote(g.ImportPrefix+"github.com/hailocab/protobuf/proto"))
 	if !g.file.proto3 {
+		g.P("import " + g.Pkg["json"] + ` "encoding/json"`)
 		g.P("import " + g.Pkg["math"] + ` "math"`)
 	}
 
